@@ -1,0 +1,10 @@
+html,
+body {
+  font: 100% sans-serif;
+}
+
+body {
+  background-color: $bodyBg;
+  display: flex;
+  justify-content: center;
+}
