@@ -46,20 +46,22 @@ export default class Root extends React.Component {
 
   renderRoot() {
     if (this.state.name.length < 5) {
-      return (<div>
-        <h1>Welcome to the Netomedia lobby</h1>
-        <button type="button" onClick={ () => this.renderModal('login') }>Login</button>
-      </div>);
+      return (
+        <div>
+          <h1>Welcome to the Netomedia lobby</h1>
+          <button type="button" onClick={ () => this.renderModal('login') }>Login</button>
+        </div>
+      );
     }
-    else {
-      const sign = this.state.currency === 'Dollar'? '$' : '€';
-      return (<div>
-        <h1>Welcome back { this.state.name }, your balance is:{ this.state.amount } { sign }</h1>
-        <button type="button" onClick={ () => this.renderModal('update') }>Change Balance</button>
-      </div>);
-    }
-  }
+    const sign = this.state.currency === 'Dollar'? '$' : '€';
 
+    return (
+      <div>
+        <h1>Welcome back { this.state.name }, your balance is: { this.state.amount } { sign }</h1>
+        <button type="button" onClick={ () => this.renderModal('update') }>Change Balance</button>
+      </div>
+    );
+  }
 
   render() {
     return (
@@ -70,7 +72,8 @@ export default class Root extends React.Component {
                closeModal={ this.closeModal }
                updateName={ this.updateName }
                updateAmount={ this.updateAmount }
-               updateCurrency={ this.updateCurrency }/>
+               updateCurrency={ this.updateCurrency }
+        />
       </div>
     );
   }
