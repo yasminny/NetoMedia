@@ -13,8 +13,6 @@ export default class Root extends React.Component {
       isModalOpen: false,
       mode: ''
     };
-    this.renderRoot = this.renderRoot.bind(this);
-    this.renderModal = this.renderModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.updateName = this.updateName.bind(this);
     this.updateAmount = this.updateAmount.bind(this);
