@@ -1,4 +1,5 @@
 import React from 'react';
+import './modal.scss';
 
 export default class Modal extends React.Component {
   constructor() {
@@ -13,6 +14,7 @@ export default class Modal extends React.Component {
     this.handleChangeAmount = this.handleChangeAmount.bind(this);
     this.handleChangeCurrency = this.handleChangeCurrency.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.renderLogin = this.renderLogin.bind(this);
   }
 
   handleChangeName(event) {
@@ -41,103 +43,95 @@ export default class Modal extends React.Component {
     return this.props.closeModal();
   }
 
+  renderLogin(amountTitle) {
+    const nameTitle = 'use 5 to 15 characters and only use English characters, space and -';
+
+    return (
+      <div className="modal backdrop">
+        <div className="modal-body">
+          <button onClick={ () => this.props.closeModal() }>Close X</button>
+          <form onSubmit={ this.handleSubmit }>
+            <label>
+              Name:
+              <input type="text"
+                     value={ this.state.valueName }
+                     onChange={ this.handleChangeName }
+                     minLength={ 5 }
+                     maxLength={ 15 }
+                     pattern="[A-Za-z-\s]*"
+                     title={ nameTitle }
+                     required
+              />
+            </label>
+            <br />
+            <label>
+              Amount:
+              <input type="text"
+                     pattern="[0-9]*"
+                     value={ this.state.valueAmount }
+                     maxLength={ 15 }
+                     onChange={ this.handleChangeAmount }
+                     title={ amountTitle }
+                     required
+              />
+            </label>
+            <br />
+            <label>
+              Currency:
+              <select value={ this.state.valueCurrency }
+                      onChange={ this.handleChangeCurrency }
+              >
+                <option value="Euro">Euro</option>
+                <option value="Dollar">Dollar</option>
+              </select>
+            </label>
+            <br />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  renderUpdate(amountTitle) {
+
+    return (
+      <div className="modal backdrop" style={ backdropStyle }>
+        <div className="modal-body" style={ modalStyle }>
+          <button onClick={ () => this.props.closeModal()}>Close X</button>
+          <form onSubmit={ this.handleSubmit }>
+            <label>
+              Amount:
+              <input type="text"
+                     pattern="[0-9]*"
+                     value={ this.state.valueAmount }
+                     maxLength={ 15 }
+                     onChange={ this.handleChangeAmount }
+                     title={ amountTitle }
+                     required
+              />
+            </label>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     if (!this.props.isOpen) {
       return null;
     }
 
-    const modalStyle = {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      zIndex: '100',
-      background: '#fff'
-    };
-
-    const backdropStyle = {
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      top: '0px',
-      left: '0px',
-      zIndex: '50',
-      background: 'rgba(0, 0, 0, 0.3)'
-    };
-
-    const nameTitle = 'use 5 to 15 characters and only use English characters, space and -';
     const amountTitle = 'use up to 15 characters and only use numbers';
 
     if (this.props.mode === 'login') {
 
-      return (
-        <div className="modal backdrop" style={ backdropStyle }>
-          <div className="modal-body" style={ modalStyle }>
-            <button onClick={ () => this.props.closeModal() }>Close X</button>
-            <form onSubmit={ this.handleSubmit }>
-              <label>
-                Name:
-                <input type="text"
-                       value={ this.state.valueName }
-                       onChange={ this.handleChangeName }
-                       minLength={ 5 }
-                       maxLength={ 15 }
-                       pattern="[A-Za-z-\s]*"
-                       title={ nameTitle } required
-                />
-              </label>
-              <br />
-              <label>
-                Amount:
-                <input type="text"
-                       pattern="[0-9]*"
-                       value={ this.state.valueAmount }
-                       maxLength={ 15 }
-                       onChange={ this.handleChangeAmount }
-                       title={ amountTitle }
-                       required
-                />
-              </label>
-              <br />
-              <label>
-                Currency:
-                <select value={ this.state.valueCurrency }
-                        onChange={ this.handleChangeCurrency }
-                >
-                  <option value="Euro">Euro</option>
-                  <option value="Dollar">Dollar</option>
-                </select>
-              </label>
-              <br />
-              <button type="submit">Submit</button>
-            </form>
-          </div>
-        </div>
-      );
+      return this.renderLogin(amountTitle);
     }
     if (this.props.mode === 'update') {
 
-      return (
-        <div className="modal backdrop" style={ backdropStyle }>
-          <div className="modal-body" style={ modalStyle }>
-            <button onClick={ () => this.props.closeModal()}>Close X</button>
-            <form onSubmit={ this.handleSubmit }>
-              <label>
-                Amount:
-                <input type="text"
-                       pattern="[0-9]*"
-                       value={ this.state.valueAmount }
-                       maxLength={ 15 }
-                       onChange={ this.handleChangeAmount }
-                       title={ amountTitle }
-                       required
-                />
-              </label>
-              <button type="submit">Submit</button>
-            </form>
-          </div>
-        </div>
-      );
+      return this.renderUpdate(amountTitle);
     }
   }
 
